@@ -19,8 +19,4 @@ public class FlavisApplication {
 		return String.format("Hello %s!", name);
 	}
 
-	@RequestMapping("/")
-	public String index() {
-		return "Greetings from Spring Boot!";
-	}
 }
