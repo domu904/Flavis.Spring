@@ -15,5 +15,4 @@ class FlavisApplicationTests {
 	void contextLoads() {
 		assertThat(controller).isNotNull();
 	}
-
 }
