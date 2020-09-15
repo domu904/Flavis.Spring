@@ -1,6 +1,7 @@
 package com.fly.flavis;
 
 import com.oracle.webservices.internal.api.message.ContentType;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +33,7 @@ public class HttpRequestTest {
 
         // Given
         String name = RandomStringUtils.randomAlphabetic( 8 );
-        HttpUriRequest request = new HttpGet( "https://api.github.com/users/" + name );
+        HttpUriRequest request = new HttpGet( "http://localhost:" + port + "/" + name );
 
         // When
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute( request );
@@ -54,5 +55,19 @@ public class HttpRequestTest {
         // Then
         String mimeType = ContentType.getOrDefault(response.getEntity()).getMimeType();
         assertEquals( jsonMimeType, mimeType );
+    }
+
+    @Test
+    public void givenUserExists_whenUserInformationIsRetrieved_thenRetrievedResourceIsCorrect() throws ClientProtocolException, IOException {
+        // Given
+        HttpUriRequest request = new HttpGet( "http://localhost:" + port + "/" );
+
+        // When
+        HttpResponse response = HttpClientBuilder.create().build().execute( request );
+
+        // Then
+        GitHubUser resource = RetrieveUtil.retrieveResourceFromResponse(
+                response, GitHubUser.class);
+        assertThat( "eugenp", Matchers.is( resource.getLogin() ) );
     }
 }
