@@ -1,6 +1,11 @@
 package com.fly.flavis;
 
 import com.oracle.webservices.internal.api.message.ContentType;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +73,6 @@ public class HttpRequestTest {
         // Then
         GitHubUser resource = RetrieveUtil.retrieveResourceFromResponse(
                 response, GitHubUser.class);
-        assertThat( "eugenp", Matchers.is( resource.getLogin() ) );
+        assertThat( "test", Matchers.is( resource.getLogin() ) );
     }
 }
