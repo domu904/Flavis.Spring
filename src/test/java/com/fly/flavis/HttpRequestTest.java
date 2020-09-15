@@ -1,5 +1,6 @@
 package com.fly.flavis;
 
+import com.oracle.webservices.internal.api.message.ContentType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HttpRequestTest {
@@ -26,8 +28,7 @@ public class HttpRequestTest {
     }
 
     @Test
-    public void givenUserDoesNotExists_whenUserInfoIsRetrieved_then404IsReceived()
-            throws ClientProtocolException, IOException {
+    public void givenUserDoesNotExists_whenUserInfoIsRetrieved_then404IsReceived() throws ClientProtocolException, IOException {
 
         // Given
         String name = RandomStringUtils.randomAlphabetic( 8 );
@@ -38,5 +39,20 @@ public class HttpRequestTest {
 
         // Then
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NOT_FOUND));
+    }
+
+    @Test
+    public void givenRequestWithNoAcceptHeader_whenRequestIsExecuted_thenDefaultResponseContentTypeIsJson() throws ClientProtocolException, IOException {
+
+        // Given
+        String jsonMimeType = "application/json";
+        HttpUriRequest request = new HttpGet( "http://localhost:" + port + "/" );
+
+        // When
+        HttpResponse response = HttpClientBuilder.create().build().execute( request );
+
+        // Then
+        String mimeType = ContentType.getOrDefault(response.getEntity()).getMimeType();
+        assertEquals( jsonMimeType, mimeType );
     }
 }
