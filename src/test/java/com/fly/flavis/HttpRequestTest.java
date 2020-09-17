@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
@@ -74,5 +77,37 @@ public class HttpRequestTest {
         GitHubUser resource = RetrieveUtil.retrieveResourceFromResponse(
                 response, GitHubUser.class);
         assertThat( "test", Matchers.is( resource.getLogin() ) );
+    }
+
+    @Component
+    @Profile("test")
+    public class TestMarshallerFactory implements FactoryBean<IMarshaller> {
+
+        @Autowired
+        private Environment env;
+
+        public IMarshaller getObject() {
+            String testMime = env.getProperty("test.mime");
+            if (testMime != null) {
+                switch (testMime) {
+                    case "json":
+                        return new JacksonMarshaller();
+                    case "xml":
+                        return new XStreamMarshaller();
+                    default:
+                        throw new IllegalStateException();
+                }
+            }
+
+            return new JacksonMarshaller();
+        }
+
+        public Class<IMarshaller> getObjectType() {
+            return IMarshaller.class;
+        }
+
+        public boolean isSingleton() {
+            return true;
+        }
     }
 }
