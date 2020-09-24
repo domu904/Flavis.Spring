@@ -1,6 +1,6 @@
 # Flavis.Spring
  
- This is the Flavis Spring API
+ This is the Flavis Spring API application for customer systems
  
  ## Pre req
  * Java 1.8
