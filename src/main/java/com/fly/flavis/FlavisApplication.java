@@ -20,12 +20,12 @@ public class FlavisApplication {
 	}
 
 	@GetMapping("/customer")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+	public String customer(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return String.format("Hello %s!", name);
 	}
 
 	@GetMapping("/order")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+	public String order(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return String.format("Hello %s!", name);
 	}
 
