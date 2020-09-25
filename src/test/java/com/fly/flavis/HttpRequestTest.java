@@ -1,6 +1,5 @@
 package com.fly.flavis;
 
-import com.oracle.webservices.internal.api.message.ContentType;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -80,35 +79,4 @@ public class HttpRequestTest {
 //        assertThat( "test", Matchers.is( resource.getLogin() ) );
     }
 
-    @Component
-    @Profile("test")
-    public class TestMarshallerFactory implements FactoryBean<IMarshaller> {
-
-        @Autowired
-        private Environment env;
-
-        public IMarshaller getObject() {
-            String testMime = env.getProperty("test.mime");
-            if (testMime != null) {
-                switch (testMime) {
-                    case "json":
-                        return new JacksonMarshaller();
-                    case "xml":
-                        return new XStreamMarshaller();
-                    default:
-                        throw new IllegalStateException();
-                }
-            }
-
-            return new JacksonMarshaller();
-        }
-
-        public Class<IMarshaller> getObjectType() {
-            return IMarshaller.class;
-        }
-
-        public boolean isSingleton() {
-            return true;
-        }
-    }
 }
