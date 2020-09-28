@@ -1,4 +1,4 @@
 package com.fly.flavis.util;
 
-public class FlavisUtils {
+public class FlavisUtilTest {
 }
