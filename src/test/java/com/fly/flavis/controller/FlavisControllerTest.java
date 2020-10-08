@@ -6,8 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FlavisControllerTest {
 
     @Test
-    public void Test_User(){
-        assertTrue(true);
+    public void test_getUser(){
+        assertTrue(false);
     }
 
+    @Test
+    public void test_updateUser(){
+        assertTrue(false);
+    }
+
+    @Test
+    public void test_listUser(){
+        assertTrue(false);
+    }
 }
