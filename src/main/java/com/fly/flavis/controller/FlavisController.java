@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FlavisController {
 
-    @GetMapping("user")
+    @GetMapping("/user")
     public String getUser(long id) {
         return "user1";
     }
